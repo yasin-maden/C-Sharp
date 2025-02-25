@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Odevler", "Odevler", "{5B71
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "25-02", "25-02\25-02.csproj", "{B80FA4F6-48B0-42CF-BBA7-1CD3D3BEDB60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marmaray", "Marmaray\Marmaray.csproj", "{0645E0B3-CF87-47C3-8430-A7C9AEFC7524}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{B80FA4F6-48B0-42CF-BBA7-1CD3D3BEDB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B80FA4F6-48B0-42CF-BBA7-1CD3D3BEDB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B80FA4F6-48B0-42CF-BBA7-1CD3D3BEDB60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0645E0B3-CF87-47C3-8430-A7C9AEFC7524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0645E0B3-CF87-47C3-8430-A7C9AEFC7524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0645E0B3-CF87-47C3-8430-A7C9AEFC7524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0645E0B3-CF87-47C3-8430-A7C9AEFC7524}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
