@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Marmaray
 {
-    public class data
+    public class Data
     {
         public string Id { get; set; }
         public double Kazanc { get; set; }
@@ -25,7 +25,7 @@ namespace Marmaray
         public static Dictionary<int, string> duraklar = new Dictionary<int, string>();
         public static Dictionary<string, string> kisiler = new Dictionary<string, string>();
         public static Dictionary<string, string> abonmanlar = new Dictionary<string, string>();
-        public static List<data> _data = new List<data>();
+        public static List<Data> _data = new List<Data>();
         public static string aktifKullaniciId = "";
 
         static void Main(string[] args)
@@ -153,20 +153,20 @@ namespace Marmaray
 
         private static void ZRaporu()
         {
-            try
-            {
-                string json = JsonSerializer.Serialize(_data);
-                File.WriteAllText(@"C:\path.json", json);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("json yazılırken hata oluştu. " + ex);
-            }
-            
+           
 
+            // write to json
+            var json = JsonSerializer.Serialize(new Data()
+            {
+                Id = aktifKullaniciId,
+                Kazanc = 100
+            });
+            Console.WriteLine(json);
+
+            // write to file
+            System.IO.File.WriteAllText("data.json", json);
 
             int counter = 0;
-            Console.Clear();
             Console.WriteLine("------Z RAPORU------");
             for (int i = 0; i <= kazanclar.Count - 1; i++)
             {
@@ -198,10 +198,10 @@ namespace Marmaray
                 double iadeUcreti = IadeYap(binilenDurak, inilenDurak);
                 kazanclar.Add(DateTime.Now, iadeUcreti * -1);
 
-                _data.Add(new data()
+                _data.Add(new Data()
                 {
                     Id = aktifKullaniciId,
-                    Kazanc = iadeUcreti * -1
+                    Kazanc = 210
                 });
             }
 
@@ -244,11 +244,11 @@ namespace Marmaray
             double ucret = OdenenTutar();
             kazanclar.Add(DateTime.Now, ucret);
 
-            _data.Add(new data()
-            {
-                Id = aktifKullaniciId,
-                Kazanc = ucret
-            });
+            //_data.Add(new data()
+            //{
+            //    Id = aktifKullaniciId,
+            //    Kazanc = ucret
+            //});
         }
 
         private static double OdenenTutar()
@@ -262,3 +262,15 @@ namespace Marmaray
         }
     }
 }
+
+
+/*
+ * 
+ * InisIslemi()
+ * 1- kişiyi seç
+ * 2- durak seç
+ * 3- iade almak ister misiniz?
+ * 4- JSON'a yaz
+ * 5- kiiyi binenler listesinden çıkar
+ * todo: bakiye güncelle
+ */
