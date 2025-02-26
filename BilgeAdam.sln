@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marmaray", "Marmaray\Marmar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otopark", "Otopark\Otopark.csproj", "{0308769A-FB54-4EB5-B674-E86C99FB7D1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marmaray-Revize", "Marmaray-Revize\Marmaray-Revize.csproj", "{9329F638-C566-4962-9D72-5346104EC88A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +151,10 @@ Global
 		{0308769A-FB54-4EB5-B674-E86C99FB7D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0308769A-FB54-4EB5-B674-E86C99FB7D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0308769A-FB54-4EB5-B674-E86C99FB7D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9329F638-C566-4962-9D72-5346104EC88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9329F638-C566-4962-9D72-5346104EC88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9329F638-C566-4962-9D72-5346104EC88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9329F638-C566-4962-9D72-5346104EC88A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
