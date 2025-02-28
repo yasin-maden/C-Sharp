@@ -414,3 +414,161 @@ class Program
 }
 
 --------------------------------
+
+private static void DosyayaYaz<T>(ref List<T> list, JsonName name)
+{
+    try
+    {
+        // JSON formatına çevirme
+        string json = JsonConvert.SerializeObject(list, Formatting.Indented);
+
+        // dosya adını belirle
+        string filePath = name.ToString().ToLower() + ".json";
+
+        // dosya yolu geçerli mi?
+        if (string.IsNullOrWhiteSpace(filePath))
+        {
+            throw new ArgumentException("Geçersiz dosya yolu.");
+        }
+
+        // dosyaya yaz
+        File.WriteAllText(filePath, json);
+        Console.WriteLine("Dosya başarıyla yazıldı: " + filePath);
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine("Hata: " + ex.Message);
+    }
+    catch (JsonException ex)
+    {
+        Console.WriteLine("JSON dönüştürme hatası: " + ex.Message);
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine("Dosya yazma hatası: " + ex.Message);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Bilinmeyen bir hata oluştu: " + ex.Message);
+    }
+}
+Açıklamalar:
+ArgumentException: Dosya yolunun geçersiz olduğuna dair bir hata fırlatılır.
+JsonException: JSON serileştirme işlemi sırasında bir hata oluşursa, bu hata yakalanır.
+IOException: Dosya yazma işlemi sırasında (örneğin, dosya erişilemiyorsa) meydana gelen hatalar için bir kontrol eklenir.
+Exception: Diğer beklenmeyen hatalar için genel bir hata yakalama bloğu.
+--------------------------------
+private static void DosyadanOku<T>(ref List<T> list, JsonName name)
+{
+    try
+    {
+        // dosya adını belirle
+        string filePath = name.ToString().ToLower() + ".json";
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            
+            try
+            {
+                var deserializedObject = JsonConvert.DeserializeObject<List<T>>(json);
+                if (deserializedObject != null)
+                {
+                    list = deserializedObject;
+                    Console.WriteLine("Dosya başarıyla okundu: " + filePath);
+                }
+                else
+                {
+                    Console.WriteLine($"{filePath} dosyası boş veya hatalı.");
+                }
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine("JSON çözümleme hatası: " + ex.Message);
+            }
+        }
+        else
+        {
+            Console.WriteLine($"{filePath} dosyası bulunamadı.");
+        }
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine("Dosya okuma hatası: " + ex.Message);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Bilinmeyen bir hata oluştu: " + ex.Message);
+    }
+}
+
+Açıklamalar:
+File.Exists: Dosyanın var olup olmadığını kontrol eder.
+IOException: Dosya okuma işlemi sırasında meydana gelen hatalar (örneğin, dosyanın erişilememesi) için bir kontrol eklenmiştir.
+JsonException: JSON verisinin çözümleme sırasında (deserialization) oluşabilecek hatalar için kontrol eklenmiştir.
+Genel Exception: Herhangi bir bilinmeyen hata durumu için genel bir hata yakalama bloğu eklenmiştir.
+--------------------------------
+private static void KisiEkle()
+{
+    try
+    {
+        // Kullanıcıdan İsim Soyisim ve ID al
+        string name = GetInput.GetString("İsim Soyisim: ");
+        if (string.IsNullOrWhiteSpace(name)) 
+        {
+            Console.WriteLine("Geçersiz isim soyisim.");
+            return;
+        }
+
+        int id = GetInput.GetPositiveInt("Kişi Id: ");
+        if (id <= 0) 
+        {
+            Console.WriteLine("Geçersiz ID. Lütfen pozitif bir ID girin.");
+            return;
+        }
+
+        // Önceden Kaydedilmiş Kişileri Yükle
+        List<Person> persons = new List<Person>();
+        try
+        {
+            DosyadanOku(ref persons, JsonName.Persons);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Kişileri yüklerken bir hata oluştu: " + ex.Message);
+            return;
+        }
+
+        // Aynı ID'ye sahip kişi kontrolü
+        if (persons.Any(p => p.Id == id))
+        {
+            Console.WriteLine("Bu id ile kayıtlı bir kişi zaten var.");
+            return;
+        }
+
+        // Yeni kişi oluştur
+        Person newPerson = new Person() { Id = id, Name = name };
+        persons.Add(newPerson);
+
+        // Kişiyi dosyaya yaz
+        try
+        {
+            DosyayaYaz(ref persons, JsonName.Persons);
+            Console.WriteLine("Kişi başarıyla eklendi.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Kişiyi dosyaya yazarken bir hata oluştu: " + ex.Message);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Bir hata oluştu: " + ex.Message);
+    }
+}
+
+Açıklamalar:
+Giriş doğrulama: name'in boş olup olmadığını kontrol ediyoruz. Aynı şekilde, id'nin pozitif olup olmadığını kontrol ediyoruz.
+Dosya okuma ve yazma hatası: DosyadanOku ve DosyayaYaz işlemleri için try-catch blokları ekledik. Eğer dosya okuma veya yazma sırasında hata oluşursa, kullanıcıya hata mesajı gösterilir.
+Kişi ID kontrolü: persons listesinde zaten mevcut olan bir ID'nin eklenmeye çalışılması durumunda bir uyarı mesajı görüntülenir.
+--------------------------------
